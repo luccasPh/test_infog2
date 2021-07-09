@@ -16,6 +16,11 @@ class SurvivorSerializer(serializers.ModelSerializer):
         model = models.Survivor
         fields = "__all__"
 
+
+class CreateSurvivorSerializer(SurvivorSerializer):
+    class Meta(SurvivorSerializer.Meta):
+        ...
+
     def create(self, validated_data):
         inventory_data = validated_data.pop("inventory")
         survivor = models.Survivor.objects.create(**validated_data)
@@ -23,3 +28,8 @@ class SurvivorSerializer(serializers.ModelSerializer):
         models.Inventory.objects.create(**inventory_data)
 
         return survivor
+
+
+class UpdateSurvivorLocationSerializer(SurvivorSerializer):
+    class Meta(SurvivorSerializer.Meta):
+        read_only_fields = ("name", "sex", "age", "infected_report")
