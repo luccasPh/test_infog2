@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "test_infog2"
+version = "0.1.0"
+description = ""
+authors = ["Lucas Pinheiro <lucas4pinheiro@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "3.9.5"
+Django = "^3.2.5"
+djangorestframework = "^3.12.4"
+psycopg2 = "^2.9.1"
+django-environ = "^0.4.5"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.9.2"
+black = "^21.6b0"
+taskipy = "^1.8.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+server = "python app/manage.py runserver"
