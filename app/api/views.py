@@ -3,9 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import NotFound, ValidationError
+from drf_yasg.utils import swagger_auto_schema
 
 from api import serializers
 from core.models import Survivor, Inventory
+from api.docs import survivor_schema
 
 
 def get_instance(pk) -> Survivor:
@@ -20,6 +22,7 @@ def get_instance(pk) -> Survivor:
 
 
 class CreateSurvivorView(APIView):
+    @swagger_auto_schema(**survivor_schema.survivor_create)
     def post(self, request):
         serializer = serializers.CreateSurvivorSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -29,6 +32,7 @@ class CreateSurvivorView(APIView):
 
 
 class RetrieveSurvivorView(APIView):
+    @swagger_auto_schema(**survivor_schema.survivor_retrieve)
     def get(self, request, pk):
         instance = get_instance(pk)
         serializer = serializers.SurvivorSerializer(instance=instance)
@@ -37,6 +41,7 @@ class RetrieveSurvivorView(APIView):
 
 
 class UpdateSurvivorLocationView(APIView):
+    @swagger_auto_schema(**survivor_schema.update_survivor_location)
     def post(self, request, pk):
         instance = get_instance(pk)
 
@@ -50,6 +55,7 @@ class UpdateSurvivorLocationView(APIView):
 
 
 class UpdateSurvivorInfectedView(APIView):
+    @swagger_auto_schema(**survivor_schema.update_survivor_infected)
     def post(self, request, pk):
         instance = get_instance(pk)
 
@@ -64,6 +70,7 @@ class UpdateSurvivorInfectedView(APIView):
 
 
 class ExchangeView(APIView):
+    @swagger_auto_schema(**survivor_schema.exchange_items)
     def post(self, request):
         serializer = serializers.ExchangeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -104,6 +111,7 @@ class ExchangeView(APIView):
 
 
 class ReportsView(APIView):
+    @swagger_auto_schema(**survivor_schema.reports)
     def get(self, request):
         total_survivors = Survivor.objects.count()
         total_infected_survivors = Survivor.objects.filter(infected_report=3).count()
