@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "5241ac99-ea6c-4082-afe0-8990fb0bfa6a",
+		"name": "teste_infog2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create survivor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Bruna\",\n  \"age\": 22,\n  \"sex\": \"Mulher\",\n  \"latitude\": -5.2839894,\n  \"longitude\": -44.4984872,\n\t\"inventory\": {\n\t\t\"water\": 6, \n\t\t\"food\": 3, \n\t\t\"medicine\": 7, \n\t\t\"ammunition\": 5\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/survivors/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"survivors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve survivor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/survivors/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"survivors",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/reports/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"reports",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update survivor location",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"latitude\": -6.2839894,\n  \"longitude\": -47.4984872\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/survivors/2/location/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"survivors",
+						"2",
+						"location",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update survivor infected",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/survivors/1/infected/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"survivors",
+						"1",
+						"infected",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exchange items",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"survivor_1\": 1,\n  \"survivor_2\": 2,\n  \"items_survivor_1\": {\n\t\t\"food\": 1,\n\t\t\"ammunition\": 4\n\t},\n  \"items_survivor_2\": {\n\t\t\"water\": 1,\n\t\t\"food\": 1,\n\t\t\"medicine\": 2\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/exchange/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"exchange",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
