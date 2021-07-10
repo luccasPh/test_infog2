@@ -120,7 +120,7 @@ class ExchangeViewsTests(TestCase):
 
         self.survivor_1.refresh_from_db()
         self.survivor_2.refresh_from_db()
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         self.assertEqual(self.survivor_1.inventory.water, 5)
         self.assertEqual(self.survivor_1.inventory.food, 5)

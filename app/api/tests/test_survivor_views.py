@@ -81,7 +81,7 @@ class SurvivorViewsTests(TestCase):
         )
 
         response = self.client.post(
-            "/api/survivors/99/location", payload, format="json"
+            "/api/survivors/99/location/", payload, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -92,7 +92,9 @@ class SurvivorViewsTests(TestCase):
         )
 
         response = self.client.post(
-            f"/api/survivors/{self.sample_survivor.id}/location", payload, format="json"
+            f"/api/survivors/{self.sample_survivor.id}/location/",
+            payload,
+            format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -103,7 +105,9 @@ class SurvivorViewsTests(TestCase):
         )
 
         response = self.client.post(
-            f"/api/survivors/{self.sample_survivor.id}/location", payload, format="json"
+            f"/api/survivors/{self.sample_survivor.id}/location/",
+            payload,
+            format="json",
         )
 
         survivor = response.data
@@ -112,12 +116,12 @@ class SurvivorViewsTests(TestCase):
         self.assertEqual(survivor["longitude"], -44.4984872)
 
     def test_update_survivor_infected_report_with_invalid_id(self):
-        response = self.client.post("/api/survivors/99/infected")
+        response = self.client.post("/api/survivors/99/infected/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_survivor_infected(self):
         response = self.client.post(
-            f"/api/survivors/{self.sample_survivor.id}/infected"
+            f"/api/survivors/{self.sample_survivor.id}/infected/"
         )
 
         self.sample_survivor.refresh_from_db()
@@ -134,10 +138,12 @@ class SurvivorViewsTests(TestCase):
         )
 
         response_1 = self.client.post(
-            f"/api/survivors/{self.sample_survivor.id}/location", payload, format="json"
+            f"/api/survivors/{self.sample_survivor.id}/location/",
+            payload,
+            format="json",
         )
         response_2 = self.client.post(
-            f"/api/survivors/{self.sample_survivor.id}/infected"
+            f"/api/survivors/{self.sample_survivor.id}/infected/"
         )
 
         self.assertEqual(response_1.status_code, status.HTTP_400_BAD_REQUEST)
