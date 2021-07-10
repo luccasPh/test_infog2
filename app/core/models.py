@@ -18,7 +18,7 @@ class Survivor(models.Model):
     longitude = models.FloatField()
     infected_report = models.IntegerField(default=0)
 
-    def total_points(self, items) -> int:
+    def calculate_points(self, items) -> int:
         total = 0
         for key, value in items.items():
             inventory_value = getattr(self.inventory, key)
@@ -55,6 +55,15 @@ class Inventory(models.Model):
                 update_inventory[key] = getattr(self, key) + value
 
         return update_inventory
+
+    def total_points(self) -> int:
+        total = 0
+        for item in ItemsPoint:
+            key = item.name
+            if getattr(self, key) > 0:
+                total += getattr(self, key) * item.value
+
+        return total
 
     def __str__(self):
         return f"Inventory of {self.survivor.name}"

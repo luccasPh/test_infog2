@@ -47,3 +47,10 @@ class ExchangeSerializer(serializers.Serializer):
     survivor_2 = serializers.IntegerField()
     items_survivor_1 = SurvivorsItemsSerializer()
     items_survivor_2 = SurvivorsItemsSerializer()
+
+
+class ReportsSerializer(serializers.Serializer):
+    infected_survivors = serializers.IntegerField()
+    uninfected_survivors = serializers.IntegerField()
+    average_resource = SurvivorsItemsSerializer()
+    points_lost = serializers.IntegerField()

@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -73,8 +74,8 @@ class ExchangeView(APIView):
         items_survivor_1 = serializer.data["items_survivor_1"]
         items_survivor_2 = serializer.data["items_survivor_2"]
 
-        survivor_1_points = survivor_1.total_points(items_survivor_1)
-        survivor_2_points = survivor_2.total_points(items_survivor_2)
+        survivor_1_points = survivor_1.calculate_points(items_survivor_1)
+        survivor_2_points = survivor_2.calculate_points(items_survivor_2)
 
         if not survivor_2_points >= survivor_1_points:
             raise ValidationError(
@@ -100,3 +101,52 @@ class ExchangeView(APIView):
         )
 
         return Response(status=status.HTTP_200_OK)
+
+
+class ReportsView(APIView):
+    def get(self, request):
+        total_survivors = Survivor.objects.count()
+        total_infected_survivors = Survivor.objects.filter(infected_report=3).count()
+        total_uninfected_survivors = total_survivors - total_infected_survivors
+
+        average_resource = dict(
+            water=int(
+                Inventory.objects.filter(survivor__infected_report=0)
+                .aggregate(Avg("water"))
+                .get("water__avg", 0)
+            ),
+            food=int(
+                Inventory.objects.filter(survivor__infected_report=0)
+                .aggregate(Avg("food"))
+                .get("food__avg", 0)
+            ),
+            medicine=int(
+                Inventory.objects.filter(survivor__infected_report=0)
+                .aggregate(Avg("medicine"))
+                .get("medicine__avg", 0)
+            ),
+            ammunition=int(
+                Inventory.objects.filter(survivor__infected_report=0)
+                .aggregate(Avg("ammunition"))
+                .get("ammunition__avg", 0)
+            ),
+        )
+
+        survivors_infected = Survivor.objects.filter(infected_report=3).all()
+        points_lost = 0
+        for survivor in survivors_infected:
+            points_lost += survivor.inventory.total_points()
+
+        data = dict(
+            infected_survivors=int(total_infected_survivors / total_survivors * 100),
+            uninfected_survivors=int(
+                total_uninfected_survivors / total_survivors * 100
+            ),
+            average_resource=average_resource,
+            points_lost=points_lost,
+        )
+
+        serializer = serializers.ReportsSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

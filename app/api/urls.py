@@ -8,4 +8,5 @@ urlpatterns = [
     path("survivors/<int:pk>/location", views.UpdateSurvivorLocationView.as_view()),
     path("survivors/<int:pk>/infected", views.UpdateSurvivorInfectedView.as_view()),
     path("exchange/", views.ExchangeView.as_view()),
+    path("reports/", views.ReportsView.as_view()),
 ]
