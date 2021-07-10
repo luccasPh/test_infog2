@@ -33,3 +33,17 @@ class CreateSurvivorSerializer(SurvivorSerializer):
 class UpdateSurvivorLocationSerializer(SurvivorSerializer):
     class Meta(SurvivorSerializer.Meta):
         read_only_fields = ("name", "sex", "age", "infected_report")
+
+
+class SurvivorsItemsSerializer(serializers.Serializer):
+    water = serializers.IntegerField(required=False)
+    food = serializers.IntegerField(required=False)
+    medicine = serializers.IntegerField(required=False)
+    ammunition = serializers.IntegerField(required=False)
+
+
+class ExchangeSerializer(serializers.Serializer):
+    survivor_1 = serializers.IntegerField()
+    survivor_2 = serializers.IntegerField()
+    items_survivor_1 = SurvivorsItemsSerializer()
+    items_survivor_2 = SurvivorsItemsSerializer()
