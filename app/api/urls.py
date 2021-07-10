@@ -1,6 +1,6 @@
 from django.urls import path
 
-from survivor import views
+from api import views
 
 urlpatterns = [
     path("", views.CreateSurvivorView.as_view()),

@@ -16,5 +16,5 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path("api/survivors/", include("survivor.urls")),
+    path("api/survivors/", include("api.urls")),
 ]
