@@ -1,4 +1,4 @@
-## Prerequisites
+## Pré-requisitos
 
 - [Python 3](https://www.python.org)
 - [Docker](https://www.docker.com)
