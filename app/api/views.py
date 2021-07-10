@@ -107,13 +107,16 @@ class ExchangeView(APIView):
             **survivor_2_inventory_update
         )
 
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ReportsView(APIView):
     @swagger_auto_schema(**survivor_schema.reports)
     def get(self, request):
         total_survivors = Survivor.objects.count()
+        if total_survivors == 0:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
         total_infected_survivors = Survivor.objects.filter(infected_report=3).count()
         total_uninfected_survivors = total_survivors - total_infected_survivors
 

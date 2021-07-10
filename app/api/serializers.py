@@ -19,7 +19,9 @@ class SurvivorSerializer(serializers.ModelSerializer):
 
 class CreateSurvivorSerializer(SurvivorSerializer):
     class Meta(SurvivorSerializer.Meta):
-        fields = ("name", "age", "sex", "latitude", "longitude", "inventory")
+        extra_kwargs = {
+            "infected_report": {"read_only": True},
+        }
 
     def create(self, validated_data):
         inventory_data = validated_data.pop("inventory")
