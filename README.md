@@ -37,4 +37,4 @@ Para executar API no modo de produção:
 
 - Execute docker-compose produção:
   `docker-compose -f prod.yml up -d`
-- Você pode testar a API prod com as collection do Postman localizada neste repositório. `teste_infog2.postman_collection.json`
+- Você pode testar a API prod com as collection do [Postman](https://www.postman.com/) localizada neste repositório. `teste_infog2.postman_collection.json`
